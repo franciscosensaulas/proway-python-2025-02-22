@@ -1,39 +1,33 @@
 def remover_espacos_comeco():
     texto = "   Meu texto   "
 
-    print("Texto original: '", texto, "' terminou texto", sep="")
+    print("Texto original: '", texto, "'terminou texto")
 
-    text_sem_espacos_comeco = texto.lstrip() # left strip
+    text_sem_espacos_comeco = texto.lstrip()
     print("Texto removido espaços do começo: '", text_sem_espacos_comeco, "' terminou texto", sep="")
 
 
 def remover_espacos_final():
     texto = "   Meu texto   "
     print("Texto original: '", texto, "' terminou texto", sep="")
-    texto_sem_espacos_final = texto.rstrip() # remover os espaços da direita
-    print("Texto removido espaços do final: '", texto_sem_espacos_final, "' terminou texto", sep="")
-
-
-def remover_espacos_comeco_fim():
-    texto = "   Meu texto   "
-    print("Texto original: '", texto, "' terminou texto", sep="")
     texto_sem_espacos_final = texto.strip() # remover os espaços da direita
-    print("Texto removido espaços do começo e do final: '", texto_sem_espacos_final, "' terminou texto", sep="")
+    print("Texto removido espaços do começo e do final:'", texto_sem_espacos_final, "' terminou texto", sep="")
+
 
 def converter_letra_minuscula():
     opcao = "SIM"
 
-    opcao_sanitizada = opcao.lower() # 'sim'
+    opcao_sanitizada = opcao.lower() # ' sim '
     if opcao_sanitizada == "sim":
         print("Usuário aceitou")
     else:
-        print("Usuário não aceitou")
+        print("Usuárionão aceitou")
 
 
 def converter_letra_maiuscula():
-    nome_completo = "Francisco Lucas Janesch Lange Sens"
+    nome_completo = "Jeferson Pereira de Almeida"
 
-    nome_completo_sanitizada = nome_completo.upper() # 'FRANCISCO LUCAS JANESCH LANGE SENS'
+    nome_completo_sanitizada = nome_completo.upper() # Trazer o nome em Letra Maiuscula
     print("Nome completo: ", nome_completo_sanitizada)
 
 
@@ -42,17 +36,18 @@ def quantidade_pessoas_comecam_enzo():
     quantidade_enzo = 0
     while indice < 4:
         nome_completo = input("Digite o nome completo: ")
-        if nome_completo.lower().startswith("enzo"):
+        if nome_completo.startswith("Enzo"):
             quantidade_enzo = quantidade_enzo + 1
         indice = indice + 1
-    print("Quantidade de enzo(s): ", quantidade_enzo)
+    print("Quantidade de enzos(s): ", quantidade_enzo)
 
 
 def quantidade_empresas_ltda_que_terminam_com_ltda():
     indice = 0
     quantidade_ltda = 0
-    while indice < 4:
+    while indice <4:
         empresa = input("Digite o nome da empresa: ")
+        # endswith = terminar com exemplo.....
         if empresa.upper().endswith("LTDA"):
             quantidade_ltda = quantidade_ltda + 1
         indice = indice + 1
@@ -60,30 +55,30 @@ def quantidade_empresas_ltda_que_terminam_com_ltda():
 
 
 def obter_quantidade_caracteres_string():
-    texto = "Um texto aí "
-    # len => length que é utilizado para saber o comprimento de uma string
-    quantidade_caracteres = len(texto) 
+    texto = "Um texto ai "
+    # len => length que é utilizado para saber o comprimento de uma string 
+    quantidade_caracteres = len(texto)
     print("Texto: '", texto, "'", sep="")
     print("Quantidade de caracteres:", quantidade_caracteres)
 
 
 def substituir_caracteres_na_string():
-    cpf_formatado = "201.392.301-20"
-    cpf = cpf_formatado.replace(".", "").replace("-", "")  # "20139230120"
+    cpf_formatado = "082.752.809-40"
+    cpf = cpf_formatado.replace(".", "").replace("-", "")
     print("CPF formatado:", cpf_formatado)
     print("CPF sem formatação:", cpf)
 
 
 def extrair_partes_da_string():
-    # Primeira barra está na posição 2
-    # O número 7 está na posição 9
+    # primeira barra está na posiçao 2
+    # o número 7 está na posição 9
     #                  0123456789
-    data_nascimento = "12/01/2007"
+    data_nascimento = "12/12/2007"
     dia = data_nascimento[0:2]
     mes = int(data_nascimento[3:5])
     ano = data_nascimento[6:10]
     print("Dia:", dia)
-    print("Mês:", mes)
+    print("Mês:", ano)
     print("Ano:", ano)
 
     if mes == 1:
@@ -108,33 +103,35 @@ def extrair_partes_da_string():
         mes_extenso = "Outubro"
     elif mes == 11:
         mes_extenso = "Novembro"
-    else:
+    elif mes == 12:
         mes_extenso = "Dezembro"
 
     print("Enzo nasceu no dia: ", dia, " de ", mes_extenso, " de ", ano, ".", sep="")
 
 
+
 def extrair_partes_por_delimitador():
-    data_nascimento = "21/03/2019"
+    data_nascimento = "18/09/1992"
     dia, mes, ano = data_nascimento.split("/")
     print(dia)
     print(mes)
     print(ano)
 
 def extrair_partes_do_email():
-    email_completo = "francisosens@proway.com"
+    email_completo = "Franciscosens@proway.com"
     user_name, dominio_completo = email_completo.split("@")
     dominio, _ = dominio_completo.split(".")
     print(user_name)
     print(dominio)
 
+
 def extrair_data_hora_por_delimitador():
-    data_hora_nascimento = "21/03/2019 23:40:59"
+    data_hora_nascimento = "21/03/2014 23:40:59"
     data_nascimento, hora_nascimento = data_hora_nascimento.split(" ")
-    
+
     hora, minuto, segundo = hora_nascimento.split(":")
     dia, mes, ano = data_nascimento.split("/")
-    
+
     print("Dia:", dia)
     print("Mes:", mes)
     print("Ano:", ano)
@@ -143,5 +140,11 @@ def extrair_data_hora_por_delimitador():
     print("Segundo:", segundo)
 
 
+
+
 if __name__ == "__main__":
-    extrair_partes_do_email()
+    extrair_data_hora_por_delimitador()
+
+
+
+
