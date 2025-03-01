@@ -1,3 +1,6 @@
+import os
+
+
 def exemplo_apresentar_contagem():
     indice = 0 
     # enquanto indice for menor 10, faça
@@ -61,5 +64,47 @@ def exemplo_descobrir_maior_salario():
     print("Maior salário:", maior_salario)
 
 
+def exemplo_descobrir_menor_salario():
+    menor_salario = 1_000_000_000
+    quantidade_desejada = int(input("Digite a quantidade desejada para cadastrar: "))
+    indice = 0
+    while indice < quantidade_desejada:
+        salario = int(input("Digite o salário: "))
+        if salario < menor_salario:
+            menor_salario = salario
+        indice = indice + 1
+    print("Menor salário:", menor_salario) 
+
+
+def exemplo_executar_enquanto_desejar():
+    confirmacao = input("Deseja calcular a média? [s/n]: ")
+    while(confirmacao != "n"):
+        nota1 = float(input("Digite a nota 1: "))
+        nota2 = float(input("Digite a nota 2: "))
+        nota3 = float(input("Digite a nota 3: "))
+        media = (nota1 + nota2 + nota3) / 3
+
+        print("Média: ", media)
+
+        confirmacao = input("Deseja calcular a média? [s/n]: ")
+        
+        # limpar o console
+        os.system("cls")
+
+
+def quantidade_habitantes_de_blumenau():
+    quantidade_pessoas_pesquisa = 5
+    indice, quantidade_blumenau, quantidade_outras = 0, 0, 0
+    while indice < quantidade_pessoas_pesquisa:
+        nome_cidade = input("Digite o nome da cidade: ")
+        if nome_cidade.lower().strip() == "blumenau":
+            quantidade_blumenau = quantidade_blumenau + 1
+        else:
+            quantidade_outras = quantidade_outras + 1
+        indice = indice + 1
+    print("Habitantes de Blumenau:", quantidade_blumenau)
+    print("Habitantes de outras cidades:", quantidade_outras)
+
+
 if __name__ == "__main__":
-    exemplo_descobrir_maior_salario()
+    quantidade_habitantes_de_blumenau()
