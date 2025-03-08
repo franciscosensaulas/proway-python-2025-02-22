@@ -143,5 +143,14 @@ def extrair_data_hora_por_delimitador():
     print("Segundo:", segundo)
 
 
+def verificar_se_contain_parte_texto():
+    texto = "Meu texto é sobre programação"
+    # verificar se a palavra 'sobre' está no texto (começo, meio, fim, qualquer parte)
+    if "sobre" in texto:
+        print("Contém a palavra sobre")
+    else:
+        print("Não contém a palavra sobre")
+
+
 if __name__ == "__main__":
     extrair_partes_do_email()
