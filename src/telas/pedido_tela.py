@@ -1,4 +1,6 @@
 import questionary
+from rich.console import Console
+from rich.table import Table
 
 from src.helpers.tela import limpar_tela
 from src.repositorios import pedido_repositorio
@@ -10,11 +12,11 @@ def executar_menu():
         "Cadastrar",
         "Editar",
         "Apagar",
-        "Sair"
+        "Voltar"
     ]
     opcao_escolhida = ""
 
-    while opcao_escolhida != "Sair":
+    while opcao_escolhida != "Voltar":
         opcao_escolhida = questionary.select(
             "Escolha o menu desejado para o Pedidos:", 
             choices=menu_interno,
@@ -32,8 +34,14 @@ def executar_menu():
 
 
 def editar_pedido():
-    id_pedido = int(questionary.text("Digite o id do pedido para editar: ").ask().strip())
-    quantidade = int(questionary.text("Digite a quantidade: ").ask().strip())
+    pedidos = pedido_repositorio.obter_todos()
+    pedidos_opcoes = [questionary.Choice(pedido.cliente.nome + " - " + pedido.produto, value=pedido.id) 
+                       for pedido in pedidos]
+    
+    id_pedido = questionary.select("Escolha o pedido para editar:", pedidos_opcoes).ask()
+    
+    pedido_original = pedido_repositorio.obter_por_id(id_pedido) 
+    quantidade = int(questionary.text("Digite a quantidade: ", default=str(pedido_original["quantidade"])).ask().strip())
     quantidade_linhas_afetadas = pedido_repositorio.editar(id_pedido, quantidade)
     if quantidade_linhas_afetadas == 1:
         print("Pedido alterado com sucesso")
@@ -42,7 +50,16 @@ def editar_pedido():
 
 
 def apagar_pedido():
-    id_pedido_apagar = int(questionary.text("Digite o id do pedido para apagar: ").ask().strip())
+    pedidos = pedido_repositorio.obter_todos()
+    pedidos_opcoes = [questionary.Choice(pedido.cliente.nome + " - " + pedido.produto, value=pedido.id) 
+                       for pedido in pedidos]
+    
+    id_pedido_apagar = questionary.select("Escolha o pedido para apagar:", pedidos_opcoes).ask()
+
+    confirmacao = questionary.confirm("Deseja realmente apagar?").ask()
+    if confirmacao == False:
+        return
+
     linhas_afetadas = pedido_repositorio.apagar(id_pedido_apagar)
 
     if linhas_afetadas == 1:
@@ -55,14 +72,25 @@ def listar_pedidos():
     pedidos = pedido_repositorio.obter_todos()
 
     print("Lista de pedidos:")
+    console = Console()
+    tabela = Table()
+    tabela.add_column("Código",  style="cyan",)
+    tabela.add_column("Cliente",  style="magenta")
+    tabela.add_column("Produto", style="green")
+    tabela.add_column("Quantidade", style="yellow")
+    tabela.add_column("Preço Unitário", style="red")
+    tabela.add_column("Total", style="dark_orange")
+
     for pedido in pedidos:
-        print(f"""
-Código: {pedido['id']}
-Produto: {pedido['produto']}
-Quantidade: {pedido['quantidade']}
-Preço Unitário: {pedido['preco_unitario']}
-Cliente código: {pedido['id_cliente']}
-Cliente nome: {pedido['nome_cliente']}""")
+        tabela.add_row(
+            str(pedido.id),
+            pedido.cliente.nome,
+            pedido.produto,
+            str(pedido.quantidade),
+            str(pedido.preco_unitario),
+            str(pedido.quantidade * pedido.preco_unitario)
+        )
+    console.print(tabela)
 
 
 def cadastrar_pedido():

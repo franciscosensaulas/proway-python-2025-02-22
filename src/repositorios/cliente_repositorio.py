@@ -1,4 +1,5 @@
 from src.banco_dados.conexao import conectar
+from src.modelos.cliente import Cliente
 
 
 def cadastrar(nome: str, cpf: str):
@@ -29,10 +30,38 @@ def obter_todos():
     registros = cursor.fetchall()
     # fechar a conexão com o bd
     conexao.close()
-    return registros
 
-def obter_por_id():
-    pass
+    # Criar lista de clientes
+    clientes = []
+    for registro in registros:
+        cliente = {
+            "id": registro[0],
+            "nome": registro[1],
+            "cpf": registro[2]
+        }
+        clientes.append(cliente)
+
+    return clientes
+
+# { } é dicionário eu armazeno dados com uma chave guardando um valor
+#       dados = { "nome": "Francisco", "idade": 30} "Francisco" está armazenado na chave "nome"
+#       print(dados["nome"])
+# [ ] é uma lista eu armazeno dados em uma lista, que são armazenados por posição
+#       numeros = [ 10, 309, 19 ] 10 está posição 0, 309 está posição 1 ....
+#       print(numeros[0])
+
+def obter_por_id(id: int) -> Cliente:
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute("SELECT id, nome, cpf FROM clientes WHERE id = %s", (id,))
+    registro = cursor.fetchone()
+
+    cliente = Cliente()
+    cliente.id = int(registro[0])
+    cliente.nome = registro[1]
+    cliente.cpf = registro[2]
+
+    return cliente
 
 def apagar(codigo_apagar: int) -> int:
     conexao = conectar()
@@ -42,4 +71,3 @@ def apagar(codigo_apagar: int) -> int:
     linhas_afetadas = cursor.rowcount
     conexao.close()
     return linhas_afetadas
-
